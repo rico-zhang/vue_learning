@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="number" v-model="value1">
+        <select v-model="op">
+            <option value="" disabled style="display: none;"></option>
+            <option :value="value" v-for="value in ops" >{{value}}</option>
+        </select>
+        <input type="number" v-model.number="value2" >
+        <button @click="calc">=</button>
+        <span>{{result}}</span>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                value1: 0,
+                value2: 0,
+                result: 0,
+                op: "",
+                ops: ["+", "-", "*", "/"]
+            },
+            methods: {
+                calc(){
+                    this.result =eval( `${this.value1 + this.op + this.value2}` ) 
+                }
+            }
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>

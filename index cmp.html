@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style-cmp.css">
+    <style>
+        p {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <video-list :video-list="videoList"></video-list>
+        <!-- <video-item v-for="video in videoList" :poster="video.poster" :play="video.play" :rank="video.rank"
+            :title="video.title"> </video-item> -->
+    </div>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.js"></script> -->
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <script>
+
+Vue.component('video-list', {
+            props: ['videoList'],
+            template: `
+            <div>
+            <video-item v-for="video in videoList" :poster="video.poster" :play="video.play" :rank="video.rank"
+            :title="video.title" :key ="video.id"/>
+            </div>
+            `
+        })
+        Vue.component('video-item', {
+            props: ['poster', 'play', 'rank', 'title'],
+            template: `
+    <div class="video-item">
+        <div class="poster">
+            <img :src="poster" alt="title">
+            <div class="info">
+                <div class="play">{{play}}</div>
+                <div class="rank">{{rank}}</div>
+            </div>
+        </div>
+        <div class="title">{{title}}</div>
+    </div>
+`
+        });
+
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                videoList: []
+            },
+            created() {
+                axios.get('https://developer.duyiedu.com/vue/bz/video', {
+                    params: {
+                        start: 0,
+                        offset: 12
+                    }
+                }).then(res => {
+                    this.videoList = res.data.data;
+                });
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

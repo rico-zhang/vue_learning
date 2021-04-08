@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        p {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">{{msg}}
+        <button @click="handleClick">{{msg}}</button>
+    </div>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.js"></script> -->
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <script>
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "点击",
+            },
+            methods: {
+                handleClick() {
+                    console.log("handleClick");
+                }
+            },
+            computed: {
+
+            },
+            watch: {
+                msg: {
+                    handler() {
+                        console.log("侦听msg的值");
+                    },
+                    immediate: true
+                }
+            },
+            beforeCreate() {
+                console.log("--------beforeCreateStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el)
+                console.log("--------beforeCreateEnd------------");
+            },
+            created() {
+                console.log("--------createdStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el)
+                console.log("--------createdEnd------------");
+            },
+            beforeMount() {
+                console.log("--------beforeMountStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el)
+                console.log("--------beforeMountEnd------------");
+            },
+            mounted() {
+                console.log("--------mountedStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el)
+                console.log("--------mountedEnd------------");
+            },
+            beforeUpdate() {
+                console.log("--------beforeUpdateStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el.innerText)
+                console.log("--------beforeUpdateEnd------------");
+            },
+            updated() {
+                console.log("--------updatedStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el.innerText)
+                console.log("--------updatedEnd------------");
+            },
+            beforeDestroy(){
+                console.log("--------beforeDestroyStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el.innerText)
+                console.log("--------beforeDestroyEnd------------");
+            },
+            destroyed(){
+                console.log("--------destroyedStart------------");
+                console.log(this.msg)
+                console.log(this.handleClick)
+                console.log(this.$el.innerText)
+                console.log("--------destroyedEnd------------");
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

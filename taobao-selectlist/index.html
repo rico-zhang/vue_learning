@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="list-wrapper">
+            <div class="list-box" v-for="(value,index) in clothes">
+                <div class="item-name">
+                    {{value.typeName}}:
+                </div>
+                <div class="all" :class="{selected:value.isAll}" @click="clothesSelect(value)">全部</div>
+                <div class="list">
+                    <div class="item" v-for="(item,index) in value.items" @click="clothesSelect(value,item)"
+                        :class="{selected:item.isSelected}">
+                        {{item.name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="result">
+            <div class="result-label">已选条件:</div>
+            <div class="empty" v-show="selectedConds.length ==0">暂时没有选择过条件</div>
+            <div class="result-list" v-show="selectedConds.length !=0">
+                <div class="cond" v-for="(value,index) in selectedConds">
+                    {{value.name}}
+                    <span class="close" @click="clothesSelect(value.typeId)">X</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                clothes: [
+                    {
+                        typeId: "coat",
+                        typeName: "上装",
+                        isAll: true,
+                        items: [
+                            {
+                                id: 1,
+                                name: "针织衫",
+                                isSelected: false
+                            },
+                            {
+                                id: 2,
+                                name: "毛呢外套",
+                                isSelected: false
+                            },
+                            {
+                                id: 3,
+                                name: "T恤",
+                                isSelected: false
+                            },
+                            {
+                                id: 4,
+                                name: "羽绒服",
+                                isSelected: false
+                            },
+                            {
+                                id: 5,
+                                name: "棉衣",
+                                isSelected: false
+                            }, {
+                                id: 6,
+                                name: "卫衣",
+                                isSelected: false
+                            }, {
+                                id: 7,
+                                name: "风衣",
+                                isSelected: false
+                            }
+                        ]
+
+                    }, {
+                        typeId: "pants",
+                        typeName: "裤装",
+                        isAll: true,
+                        items: [
+                            {
+                                id: 1,
+                                name: "牛仔裤",
+                                isSelected: false
+                            },
+                            {
+                                id: 2,
+                                name: "铅笔裤",
+                                isSelected: false
+                            },
+                            {
+                                id: 3,
+                                name: "休闲裤",
+                                isSelected: false
+                            },
+                            {
+                                id: 4,
+                                name: "打底裤",
+                                isSelected: false
+                            },
+                            {
+                                id: 5,
+                                name: "哈伦裤",
+                                isSelected: false
+                            }
+                        ]
+
+                    }, {
+                        typeId: "skirt",
+                        typeName: "裙装",
+                        isAll: true,
+                        items: [
+                            {
+                                id: 1,
+                                name: "连衣裙",
+                                isSelected: false
+                            },
+                            {
+                                id: 2,
+                                name: "半身裙",
+                                isSelected: false
+                            },
+                            {
+                                id: 3,
+                                name: "长袖连衣裙",
+                                isSelected: false
+                            },
+                            {
+                                id: 4,
+                                name: "中长款连衣裙",
+                                isSelected: false
+                            }
+                        ]
+                    },
+                ],
+                selectedConds: []
+            },
+            methods: {
+                clothesSelect(value, item) {
+                    if (typeof (value) === "string")
+                        value = this.clothes.find(item => item.typeId == value);
+                    const typeId = value.typeId;
+                    const index = this.selectedConds.findIndex(item => item.typeId === typeId);
+                    value.items.forEach(item => {
+                        item.isSelected = false;
+                    });
+                    if (item) {//点击了具体项
+                        value.isAll = false;
+                        item.isSelected = true;
+                        const currItem = { typeId, id: item.id, name: item.name }
+                        if (index == -1)
+                            this.selectedConds.push(currItem);
+                        else
+                            this.selectedConds.splice(index, 1, currItem);
+                    } else {//点击了All
+                        value.isAll = true;
+                        this.selectedConds.splice(index, 1);
+                    }
+                },
+            }
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>

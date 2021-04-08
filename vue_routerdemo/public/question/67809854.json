@@ -1,0 +1,11 @@
+{
+    "status": "200",
+    "msg": "OK",
+    "data":{
+        "title":"什么是es6结构赋值，每次是创建一个对象吗",
+        "prev":"什么事es6箭头函数？与普通函数主要区别在哪里？",
+        "prevId":87609870,
+        "next":null,
+        "nextId":null
+    }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="wappper">
+            <div class="question">
+                <h3>提问区</h3>
+                <h4>1.请问你的姓名是:</h4>
+                <input type="text" placeholder="请输入姓名" v-model="userName">
+                <h4>2.请问你的性别是:</h4>
+                <template v-for="{key,value} in sexs">
+                    <label><input type="radio" :value="key" v-model="sex">{{value}} </label> <br>
+                </template>
+                <h4>3.请选择你的兴趣爱好:</h4>
+                <template v-for="{key,value} in hobbys">
+                    <label><input type="checkbox" :value="key" v-model="hobby">{{value}}</label> <br>
+                </template>
+                <h4>4.请介绍一下你自己:</h4>
+                <textarea v-model="introdution" placeholder="请输入自我介绍"></textarea>
+            </div>
+            <div class="answer">
+                <h3>回答展示区</h3>
+                <h4>1.请问你的姓名是:</h4>
+                <div>{{userName}}</div>
+                <h4>2.请问你的性别是:</h4>
+                <div>{{sexComputed}}</div>
+                <h4>3.请选择你的兴趣爱好:</h4>
+                <div>{{hobbyComputed}}</div>
+                <h4>4.请介绍一下你自己:</h4>
+                <div>{{introdution}}</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                userName: "",
+                sex: "secret",
+                hobby: [],
+                introdution: "",
+                sexs: [
+                    { key: "man", value: "男" },
+                    { key: "woman", value: "女" },
+                    { key: "secret", value: "保密" },
+                ],
+                hobbys: [
+                    { key: "book", value: "看书" },
+                    { key: "swing", value: "游泳" },
+                    { key: "run", value: "跑步" },
+                    { key: "movie", value: "看定影" },
+                    { key: "music", value: "听音乐" },
+                ]
+            },
+            methods: {
+                test() {
+                    const str = this.hobby.map(item => this.hobbys.find(item1 => item1.key == item).value).join();
+                    console.log(str);
+                }
+            },
+            computed: {
+                sexComputed() {
+                    return this.sexs.find(item => item.key == this.sex).value;
+                },
+                hobbyComputed() {
+                    return this.hobby.map(item => this.hobbys.find(item1 => item1.key == item).value).join();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
